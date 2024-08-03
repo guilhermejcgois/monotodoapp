@@ -1,0 +1,20 @@
+{
+  "name": "todo-models",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "todo-models/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/todo-models",
+        "tsConfig": "todo-models/tsconfig.lib.json",
+        "packageJson": "todo-models/package.json",
+        "main": "todo-models/src/index.ts",
+        "assets": ["todo-models/*.md"]
+      }
+    }
+  }
+}

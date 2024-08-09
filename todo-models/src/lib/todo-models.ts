@@ -1,16 +1,27 @@
-export type TodoItem = {
-  id: number;
-  title: string;
-  wasDone: boolean;
-};
+import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
+
+export class TodoItem {
+  @ApiResponseProperty()
+  id!: number;
+
+  @ApiResponseProperty()
+  title!: string;
+
+  @ApiResponseProperty()
+  wasDone?: boolean;
+}
 
 export type TodoList = Array<TodoItem>;
 
-export interface CreateTodoItemDto {
-  title: string;
+export class CreateTodoItemDto {
+  @ApiProperty({ example: 'Commit a new change' })
+  public title!: string;
 }
 
-export interface UpdateTodoItemDto {
-  title?: string;
-  wasDone?: boolean;
+export class UpdateTodoItemDto {
+  @ApiProperty({ example: 'Commit and push a new change' })
+  public title?: string;
+
+  @ApiProperty()
+  public wasDone?: boolean;
 }

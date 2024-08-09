@@ -4,7 +4,7 @@ import {
   TodoList,
   UpdateTodoItemDto,
 } from '@monotodoapp/todo-models';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class TodoService {
@@ -24,13 +24,19 @@ export class TodoService {
   }
 
   getById(id: number) {
-    return this.todos.find((todo) => todo.id == id);
+    const todo = this.todos.find((todo) => todo.id == id);
+
+    if (!todo) {
+      throw new NotFoundException(`Cannot found a todo item with id=${id}`);
+    }
+
+    return todo;
   }
 
   update(id: number, dto: UpdateTodoItemDto) {
     const todoIndex = this.todos.findIndex((todo) => todo.id == id);
     if (todoIndex == -1) {
-      return null;
+      throw new NotFoundException(`Cannot found a todo item with id=${id}`);
     }
 
     const todo = this.todos[todoIndex];
@@ -44,7 +50,7 @@ export class TodoService {
   delete(id: number) {
     const todoIndex = this.todos.findIndex((todo) => todo.id == id);
     if (todoIndex == -1) {
-      return null;
+      throw new NotFoundException(`Cannot found a todo item with id=${id}`);
     }
 
     return this.todos.splice(todoIndex).pop();
